@@ -1,0 +1,14 @@
+=========================================================================
+==  NOTICE file corresponding to the section 4 d of                    ==
+==  the Apache License, Version 2.0,                                   ==
+==  in this case for the MvcPages distribution.                        ==
+=========================================================================
+
+MvcPages
+Copyright 2012 Max Toro Q.
+
+This project is based on code from ASP.NET MVC 
+by 'Microsoft Corporation' (http://aspnetwebstack.codeplex.com/).
+
+Additional copyright notices and license terms applicable are
+present in the licenses directory of this distribution.

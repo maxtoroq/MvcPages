@@ -1,0 +1,41 @@
+﻿@using Samples.Account
+@model LoginModel
+@functions {
+
+   bool CheckLogin() {
+
+      if (UserInfo.UserName.Equals(Model.UserName, StringComparison.OrdinalIgnoreCase)
+         && UserInfo.Password.Equals(Model.Password)) {
+         
+         return true;
+      } 
+      
+      ModelState.AddModelError("", "The user name or password provided is incorrect.");
+      return false;
+   }
+}
+@{
+   ViewBag.Title = "Log On";
+   
+   if (IsPost
+      && TryUpdateModel()
+      && CheckLogin()) {
+
+      FormsAuthentication.RedirectFromLoginPage(Model.UserName, Model.RememberMe);
+      return;
+   }
+   
+   <h1>@ViewBag.Title</h1>
+   <p>
+       Please enter your user name and password. (use @UserInfo.UserName/@UserInfo.Password)
+   </p>
+   
+   @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
+
+   using (Html.BeginForm()) {
+      @Html.AntiForgeryToken()
+      @Html.EditorForModel()
+      <br />
+      <button>Log On</button>
+   }
+}
