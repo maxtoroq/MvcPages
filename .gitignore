@@ -4,3 +4,4 @@
 *.suo
 *.user
 packages
+NuGet.exe
