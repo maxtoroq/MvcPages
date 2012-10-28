@@ -1,33 +1,21 @@
 ﻿@using Samples.Account
 @model LoginModel
-@functions {
-
-   bool CheckLogin() {
-
-      if (UserInfo.UserName.Equals(Model.UserName, StringComparison.OrdinalIgnoreCase)
-         && UserInfo.Password.Equals(Model.Password)) {
-         
-         return true;
-      } 
-      
-      ModelState.AddModelError("", "The user name or password provided is incorrect.");
-      return false;
-   }
-}
 @{
-   ViewBag.Title = "Log On";
+   var service = new AccountService(ModelState);   
    
    if (IsPost
       && TryUpdateModel()
-      && CheckLogin()) {
+      && service.Login(Model)) {
 
       FormsAuthentication.RedirectFromLoginPage(Model.UserName, Model.RememberMe);
       return;
    }
+
+   ViewBag.Title = "Log On";
    
    <h1>@ViewBag.Title</h1>
    <p>
-       Please enter your user name and password. (use @UserInfo.UserName/@UserInfo.Password)
+       Please enter your user name and password. (use @AccountService.UserName/@AccountService.Password)
    </p>
    
    @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")

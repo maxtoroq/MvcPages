@@ -7,6 +7,7 @@ using System.Web;
 namespace Samples.Account {
 
    public class LoginModel {
+
       [Required]
       [Display(Name = "User name")]
       public string UserName { get; set; }

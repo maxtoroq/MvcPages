@@ -6,6 +6,7 @@ using CompareAttribute = System.Web.Mvc.CompareAttribute;
 namespace Samples.Account {
 
    public class ChangePasswordModel {
+
       [Required]
       [DataType(DataType.Password)]
       [Display(Name = "Current password")]
