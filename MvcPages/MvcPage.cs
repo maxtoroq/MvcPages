@@ -27,14 +27,17 @@ using System.Web.WebPages;
 
 namespace MvcPages {
 
-   public abstract class MvcPage : WebPage, IViewDataContainer {
+   public abstract class MvcPage : WebPage, IViewDataContainer, IView {
 
       ViewDataDictionary _ViewData;
       IValueProvider _ValueProvider;
       DynamicViewDataDictionary _ViewBag;
+      ITempDataProvider _TempDataProvider;
 
       public AjaxHelper<object> Ajax { get; set; }
+
       public new HtmlHelper<object> Html { get; set; }
+
       public UrlHelper Url { get; set; }
 
       public new object Model {
@@ -42,8 +45,9 @@ namespace MvcPages {
          set { this.ViewData.Model = value; }
       }
 
-      public TempDataDictionary TempData { get { return ViewContext.TempData; } }
-      public new ModelStateDictionary ModelState { get { return ViewData.ModelState; } }
+      public new ModelStateDictionary ModelState { 
+         get { return ViewData.ModelState; } 
+      }
 
       public IValueProvider ValueProvider {
          get {
@@ -75,6 +79,21 @@ namespace MvcPages {
          }
       }
 
+      public TempDataDictionary TempData {
+         get { return ViewContext.TempData; }
+      }
+
+      public ITempDataProvider TempDataProvider {
+         get {
+            if (_TempDataProvider == null) 
+               _TempDataProvider = CreateTempDataProvider();
+            return _TempDataProvider;
+         }
+         set {
+            _TempDataProvider = value;
+         }
+      }
+ 
       protected virtual void SetViewData(ViewDataDictionary viewData) {
          _ViewData = viewData;
       }
@@ -107,21 +126,27 @@ namespace MvcPages {
 
          base.InitializePage();
 
-         // The RouteData must contain an item named 'controller' with a non-empty string value
-         // required by view engine
-
          var controller = new MvcPageController { 
             TempData = new TempDataDictionary(),
             ViewData = this.ViewData
          };
 
-         var controllerContext = new ControllerContext(this.Context, new RouteData { Values = { { "controller", "MvcPage" } } }, controller);
+         // routeData must contain an item named 'controller' with a non-empty string value
+         // required by view engine
+
+         var routeData = new RouteData { 
+            Values = { 
+               { "controller", "MvcPage" } 
+            } 
+         };
+
+         var controllerContext = new ControllerContext(this.Context, routeData, controller);
 
          controller.ControllerContext = controllerContext;
 
          this.ViewContext = new ViewContext(
             controllerContext,
-            new MvcPageView(),
+            this,
             this.ViewData,
             controller.TempData,
             TextWriter.Null
@@ -143,9 +168,33 @@ namespace MvcPages {
 
          this.ViewContext.Writer = this.Output;
 
-         base.ExecutePageHierarchy();
+         PossiblyLoadTempData();
+
+         try {
+            base.ExecutePageHierarchy();
+         } finally {
+            PossiblySaveTempData();
+         }
       }
-      
+
+      protected virtual ITempDataProvider CreateTempDataProvider() {
+         return new SessionStateTempDataProvider();
+      }
+
+      void PossiblyLoadTempData() {
+         
+         if (!this.ViewContext.IsChildAction) 
+            this.TempData.Load(this.ViewContext, this.TempDataProvider);
+      }
+
+      void PossiblySaveTempData() {
+         
+         if (!this.ViewContext.IsChildAction) 
+            this.TempData.Save(this.ViewContext, this.TempDataProvider);
+      }
+
+      #region [Try]UpdateModel / ValidateModel
+
       protected bool TryUpdateModel() {
 
          Type modelType = EnsureModel();
@@ -355,13 +404,12 @@ namespace MvcPages {
          return model.GetType();
       }
 
-      class MvcPageController : Controller { }
+      #endregion
 
-      class MvcPageView : IView {
-
-         public void Render(ViewContext viewContext, TextWriter writer) {
-            throw new NotImplementedException();
-         }
+      void IView.Render(ViewContext viewContext, TextWriter writer) {
+         throw new NotImplementedException();
       }
+
+      class MvcPageController : Controller { }
    }
 }
