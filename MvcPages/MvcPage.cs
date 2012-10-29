@@ -110,15 +110,26 @@ namespace MvcPages {
          // The RouteData must contain an item named 'controller' with a non-empty string value
          // required by view engine
 
+         var controller = new MvcPageController { 
+            TempData = new TempDataDictionary(),
+            ViewData = this.ViewData
+         };
+
+         var controllerContext = new ControllerContext(this.Context, new RouteData { Values = { { "controller", "MvcPage" } } }, controller);
+
+         controller.ControllerContext = controllerContext;
+
          this.ViewContext = new ViewContext(
-            new ControllerContext(this.Context, new RouteData { Values = { { "controller", "MvcPage" } } }, new MvcPageController()),
+            controllerContext,
             new MvcPageView(),
             this.ViewData,
-            new TempDataDictionary(),
+            controller.TempData,
             TextWriter.Null
          );
 
          InitHelpers();
+
+         controller.Url = this.Url;
       }
 
       public virtual void InitHelpers() {
