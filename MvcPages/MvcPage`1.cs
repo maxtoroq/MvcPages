@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,7 @@ namespace MvcPages {
       ViewDataDictionary<TModel> _viewData;
 
       public new AjaxHelper<TModel> Ajax { get; set; }
+
       public new HtmlHelper<TModel> Html { get; set; }
 
       public new TModel Model { 
@@ -46,6 +48,7 @@ namespace MvcPages {
          }
       }
 
+      [EditorBrowsable(EditorBrowsableState.Never)]
       protected override void SetViewData(ViewDataDictionary viewData) {
 
          _viewData = new ViewDataDictionary<TModel>(viewData);
@@ -64,7 +67,7 @@ namespace MvcPages {
       /// <summary>
       /// This member supports the MvcPages infrastructure and is not intended to be used directly from your code.
       /// </summary>
-      /// <returns></returns>
+      [EditorBrowsable(EditorBrowsableState.Never)]      
       protected override Type EnsureModel() {
 
          TModel model = this.Model;

@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -93,7 +94,8 @@ namespace MvcPages {
             _TempDataProvider = value;
          }
       }
- 
+
+      [EditorBrowsable(EditorBrowsableState.Never)]
       protected virtual void SetViewData(ViewDataDictionary viewData) {
          _ViewData = viewData;
       }
@@ -393,7 +395,7 @@ namespace MvcPages {
       /// <summary>
       /// This member supports the MvcPages infrastructure and is not intended to be used directly from your code.
       /// </summary>
-      /// <returns></returns>
+      [EditorBrowsable(EditorBrowsableState.Never)]      
       protected virtual Type EnsureModel() {
 
          object model = this.Model;
