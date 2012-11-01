@@ -3,12 +3,16 @@
 @{
    var service = new AccountService(ModelState);   
    
-   if (IsPost
-      && TryUpdateModel()
-      && service.Login(Model)) {
+   if (IsPost) {
 
-      FormsAuthentication.RedirectFromLoginPage(Model.UserName, Model.RememberMe);
-      return;
+      AntiForgery.Validate();
+
+      if (TryUpdateModel()
+         && service.Login(Model)) {
+         
+         FormsAuthentication.RedirectFromLoginPage(Model.UserName, Model.RememberMe);
+         return; 
+      }
    }
 
    ViewBag.Title = "Log On";
