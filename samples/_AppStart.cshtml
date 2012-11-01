@@ -1,0 +1,10 @@
+﻿@functions {
+   void RegisterRoutes(RouteCollection routes) {
+      
+      routes.MapRoute(null, "Test/{action}",
+         new { controller = "Test", action = "Index" });
+   }
+}
+@{
+   RegisterRoutes(RouteTable.Routes);
+}
