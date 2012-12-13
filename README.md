@@ -6,6 +6,8 @@ power of ASP.NET MVC. Use model binding, model validation,
 strongly-typed HTML helpers, editor and display templates, etc.
 directly from your Razor pages, no need for routes or controllers.
 
+Why MvcPages? read [this post](http://maxtoroq.blogspot.com/2012/11/mvcpages-aspnet-mvc-without-routes-and-controllers.html).
+
 Licensing
 ---------
 
