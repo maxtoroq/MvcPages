@@ -1,14 +1,41 @@
-﻿@using Samples.Account
-@model LoginModel
-@{
-   var service = new AccountService(ModelState);   
+﻿@model ASP._Page_Account_Login_cshtml.LoginModel
+@functions {
    
+   public class LoginModel {
+
+      [Required]
+      [Display(Name = "User name")]
+      public string UserName { get; set; }
+
+      [Required]
+      [DataType(DataType.Password)]
+      [Display(Name = "Password")]
+      public string Password { get; set; }
+
+      [Display(Name = "Remember me?")]
+      public bool RememberMe { get; set; }
+   }
+
+   bool Login(LoginModel model) {
+
+      if (AccountState.UserName.Equals(model.UserName, StringComparison.OrdinalIgnoreCase)
+         && AccountState.Password.Equals(model.Password)) {
+
+         return true;
+      }
+
+      ModelState.AddModelError("", "The user name or password provided is incorrect.");
+
+      return false;
+   }
+}
+@{
    if (IsPost) {
 
       AntiForgery.Validate();
 
       if (TryUpdateModel()
-         && service.Login(Model)) {
+         && Login(Model)) {
          
          FormsAuthentication.RedirectFromLoginPage(Model.UserName, Model.RememberMe);
          return; 
@@ -19,7 +46,7 @@
    
    <h1>@ViewBag.Title</h1>
    <p>
-       Please enter your user name and password. (use @AccountService.UserName/@AccountService.Password)
+       Please enter your user name and password. (use <strong>@AccountState.UserName / @AccountState.Password</strong>)
    </p>
    
    @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
