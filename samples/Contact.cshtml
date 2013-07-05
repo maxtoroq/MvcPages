@@ -1,0 +1,70 @@
+﻿@model ASP._Page_Contact_cshtml.ContactInput
+@using System.Net.Mail
+@functions {
+   
+   public class ContactInput {
+
+      [Required]
+      public string Name { get; set; }
+
+      [Required]
+      [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*")]
+      [DataType(DataType.EmailAddress)]
+      public string Email { get; set; }
+
+      [Required]
+      public string Subject { get; set; }
+
+      [Required]
+      [DataType(DataType.MultilineText)]
+      public string Message { get; set; }
+   }
+   
+   bool SendMail() {
+
+      var message = new MailMessage {
+         To = { "info@example.com" },
+         Subject = Model.Subject,
+         ReplyToList = { new MailAddress(Model.Email, Model.Name) },
+         Body = Model.Message
+      };
+
+      try {
+
+         new SmtpClient().Send(message);
+         return true;
+
+      } catch (SmtpException) {
+         return false;
+      }
+   }
+}
+@{
+   if (IsPost) {
+
+      AntiForgery.Validate();
+
+      if (TryUpdateModel()) {
+
+         if (SendMail()) {
+            <h1>Thanks</h1>
+            <p>
+               <a href="@Request.Url.PathAndQuery">‹ Return</a>
+            </p>
+            return;
+            
+         } else {
+            ModelState.AddModelError("", "An unexpected error occurred.");
+         }
+      }
+   }
+   
+   <h1>Contact</h1>
+   using(Html.BeginForm()) {
+      @Html.AntiForgeryToken()
+      @Html.ValidationSummary(excludePropertyErrors: true)
+      @Html.EditorForModel()
+      <br />
+      <button>Send</button>
+   }
+}
