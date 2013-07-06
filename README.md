@@ -7,12 +7,13 @@ strongly-typed HTML helpers, editor and display templates, etc.
 directly from your Razor pages, no need for routes or controllers.
 
 Why MvcPages? read [this post](http://maxtoroq.blogspot.com/2012/11/mvcpages-aspnet-mvc-without-routes-and-controllers.html).
+What does it look like? see the [contact form](https://github.com/maxtoroq/MvcPages/blob/master/samples/Contact.cshtml) sample.
 
-Licensing
----------
-
-This software is licensed under the terms you may find in the file
-named "LICENSE.txt" in the licenses directory of this distribution.
+Features
+--------
+- Use the same ASP.NET MVC programming model to develop standalone Razor pages
+- Use MVC layouts from Web Pages
+- Use Web Pages layouts from MVC views
 
 Getting Started
 ---------------
