@@ -1,8 +1,8 @@
-﻿@model ASP._Page_Contact_cshtml.ContactInput
+﻿@model ASP._Page_Contact_cshtml.ContactModel
 @using System.Net.Mail
 @functions {
    
-   public class ContactInput {
+   public class ContactModel {
 
       [Required]
       public string Name { get; set; }
@@ -35,31 +35,32 @@
          return true;
 
       } catch (SmtpException) {
+
+         ModelState.AddModelError("", "An unexpected error occurred.");
          return false;
       }
    }
 }
 @{
+   
+   ViewBag.Title = "Contact";
+   
    if (IsPost) {
 
       AntiForgery.Validate();
 
-      if (TryUpdateModel()) {
+      if (TryUpdateModel()
+         && SendMail()) {
 
-         if (SendMail()) {
-            <h1>Thanks</h1>
-            <p>
-               <a href="@Request.Url.PathAndQuery">‹ Return</a>
-            </p>
-            return;
-            
-         } else {
-            ModelState.AddModelError("", "An unexpected error occurred.");
-         }
+         <h1>Thanks</h1>
+         <p>
+            <a href="@Request.Url.PathAndQuery">‹ Go back</a>
+         </p>
+         return;
       }
    }
    
-   <h1>Contact</h1>
+   <h1>@ViewBag.Title</h1>
    using(Html.BeginForm()) {
       @Html.AntiForgeryToken()
       @Html.ValidationSummary(excludePropertyErrors: true)
