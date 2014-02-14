@@ -61,11 +61,11 @@
    }
    
    <h1>@ViewBag.Title</h1>
-   using(Html.BeginForm()) {
+   <form method="post">
       @Html.AntiForgeryToken()
       @Html.ValidationSummary(excludePropertyErrors: true)
       @Html.EditorForModel()
       <br />
       <button>Send</button>
-   }
+   </form>
 }

@@ -51,10 +51,10 @@
    
    @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
 
-   using (Html.BeginForm()) {
+   <form method="post">
       @Html.AntiForgeryToken()
       @Html.EditorForModel()
       <br />
       <button>Login</button>
-   }
+   </form>
 }
