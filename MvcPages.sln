@@ -5,13 +5,6 @@ VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcPages", "src\MvcPages\MvcPages.csproj", "{6E7A80C0-218D-40BB-8609-1F88CC3F46A7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{625E9342-DD83-4E60-8D64-564664750E99}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "samples(4)", "http://localhost:50093", "{D522D5F2-DE26-41A7-A236-9C6AB70C346C}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
