@@ -15,6 +15,12 @@ Features
 - Use MVC layouts from Web Pages
 - Use Web Pages layouts from MVC views
 
+Get it now! using NuGet
+-----------------------
+```powershell
+Install-Package MvcPages
+```
+
 Getting Started
 ---------------
 
@@ -135,7 +141,3 @@ MVC 3 you have to set the version like this
    <add key="webpages:Version" value="1.0"/>
 </appSettings>
 ```
-
-Source code and releases
-------------------------
-Code hosted on [GitHub](https://github.com/maxtoroq/MvcPages). Releases available via [NuGet](http://www.nuget.org/packages/MvcPages).
