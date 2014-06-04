@@ -7,8 +7,9 @@
 MvcPages
 Copyright 2012-2013 Max Toro Q.
 
+See licenses/LICENSE.txt
+
 This project is based on code from ASP.NET MVC 
 by 'Microsoft Corporation' (http://aspnetwebstack.codeplex.com/).
 
-Additional copyright notices and license terms applicable are
-present in the licenses directory of this distribution.
+See licenses/ASP.NET-MVC-LICENSE.txt
