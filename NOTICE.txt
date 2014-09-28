@@ -5,11 +5,12 @@
 =========================================================================
 
 MvcPages
+http://maxtoroq.github.io/MvcPages/
 Copyright 2012-2013 Max Toro Q.
 
 See licenses/LICENSE.txt
 
 This project is based on code from ASP.NET MVC 
-by 'Microsoft Corporation' (http://aspnetwebstack.codeplex.com/).
+by 'Microsoft Corporation' <http://aspnetwebstack.codeplex.com/>.
 
 See licenses/ASP.NET-MVC-LICENSE.txt
