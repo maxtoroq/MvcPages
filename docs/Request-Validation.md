@@ -12,10 +12,24 @@ This is the equivalent of using `[ValidateInput(false)]` on a controller action.
 You can also put it in a start page, so it affects all pages:
 
 ```csharp
-var mvcPage = ChildPage as MvcPages.MvcPage;
+@functions {
+   
+   static void DisableRequestValidation(StartPage startPage) {
 
-if (mvcPage != null) {
-   mvcPage.ViewContext.Controller.ValidateRequest = false;
+      if (startPage != null) {
+         
+         var mvcPage = startPage.ChildPage as MvcPages.MvcPage;
+
+         if (mvcPage != null) {
+            mvcPage.ViewContext.Controller.ValidateRequest = false;
+         } else {
+            DisableRequestValidation(startPage.ChildPage as StartPage);
+         }
+      }
+   }
+}
+@{
+   DisableRequestValidation(this);
 }
 ```
 
