@@ -25,4 +25,4 @@ Blog posts
 
 [1]: https://github.com/maxtoroq/MvcPages
 [2]: docs/README.md
-[3]: https://github.com/maxtoroq/XCST
+[3]: https://github.com/maxtoroq/XCST-a
